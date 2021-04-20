@@ -3,11 +3,9 @@
 minikube delete
 killall -TERM kubectl minikube VBoxHeadless
 
-minikube start --driver=docker
+minikube start --vm-driver=docker --extra-config=apiserver.service-node-port-range=1-65535
 
-docker built -t my_nginx srcs/nginx
-
-
+eval $(minikube docker-env)
 
 # see what changes would be made, returns nonzero returncode if different
 kubectl get configmap kube-proxy -n kube-system -o yaml | \
@@ -18,7 +16,14 @@ kubectl diff -f - -n kube-system
 kubectl get configmap kube-proxy -n kube-system -o yaml | \
 sed -e "s/strictARP: false/strictARP: true/" | \
 kubectl apply -f - -n kube-system
+
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manifests/metallb.yaml
 # On first install only
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+
+docker build -t sehattor/nginx ./srcs/nginx/
+
+kubectl apply -f ./srcs/metallb/metallb.yaml 
+
+kubectl apply -f ./srcs/nginx/nginx.yaml
