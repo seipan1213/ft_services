@@ -1,4 +1,4 @@
-FROM apline:3.13
+FROM alpine:3.13
 
 RUN apk update \
     && apk --no-cache add \
@@ -13,5 +13,14 @@ RUN sed -i'.bak' 's/^#rc_sys=""/rc_sys="lxc"/' /etc/rc.conf \
     && sed -i'.bak' 's/hostname $opts/# hostname $opts/' /etc/init.d/hostname \
     && sed -i'.bak' 's/cgroup_add_service$/# cgroup_add_service/' /lib/rc/sh/openrc-run.sh \
     && mkdir /run/openrc \
-    && touch /run/openrc/softlevel \
+    && touch /run/openrc/softlevel
 
+RUN touch /var/log/mysqld.log
+
+COPY ./srcs/setup.sh /
+COPY ./srcs/my.cnf /etc/mysql/
+
+RUN chmod 755 /setup.sh
+RUN chmod 666 /var/log/mysqld.log
+
+ENTRYPOINT ["/setup.sh"]

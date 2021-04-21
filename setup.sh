@@ -23,7 +23,8 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manife
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
 docker build -t sehattor/nginx ./srcs/nginx/
+docker build -t sehattor/mysql ./srcs/mysql/
 
 kubectl apply -f ./srcs/metallb/metallb.yaml 
-
 kubectl apply -f ./srcs/nginx/nginx.yaml
+kubectl apply -f ./srcs/mysql/mysql.yaml
