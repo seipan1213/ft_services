@@ -24,7 +24,9 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 
 docker build -t sehattor/nginx ./srcs/nginx/
 docker build -t sehattor/mysql ./srcs/mysql/
+docker build -t sehattor/wordpress ./srcs/wordpress/
 
 kubectl apply -f ./srcs/metallb/metallb.yaml 
 kubectl apply -f ./srcs/nginx/nginx.yaml
 kubectl apply -f ./srcs/mysql/mysql.yaml
+kubectl apply -f ./srcs/wordpress/wordpress.yaml
