@@ -2,6 +2,7 @@
 
 /etc/init.d/mariadb setup
 rc-status
+telegraf --config /etc/telegraf/telegraf.conf&
 rc-service mariadb start
 mysql -e "CREATE DATABASE wpdb;"
 mysql -e "CREATE USER 'root'@'%' identified by 'toor';"

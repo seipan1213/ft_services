@@ -7,7 +7,7 @@ RUN apk --no-cache add \
 	openssl \
 	curl \
 	telegraf \
-	php php7-fpm php-mbstring php-intl php7-openssl php7-json php7-mysqli php7-curl \
+	php php7-fpm php-mbstring php-session php-intl php-openssl php-json php-mysqli php-curl  php-iconv php-xml\
 	mysql mysql-client
 
 RUN mkdir -p /run/nginx
@@ -23,6 +23,7 @@ RUN sed -i'.bak' 's/^#rc_sys=""/rc_sys="lxc"/' /etc/rc.conf \
     && touch /run/openrc/softlevel \
     && sed -i'.bak' 's/return 404;/root html;\n\t\tindex index.html;/' /etc/nginx/conf.d/default.conf
 
+
 WORKDIR /etc/ssl
 RUN	openssl genrsa 2048 > ./private/server.key \
 	&& openssl req -new -key ./private/server.key > ./certs/server.csr \
@@ -30,20 +31,23 @@ RUN	openssl genrsa 2048 > ./private/server.key \
 	&& openssl x509 -days 3650 -req -signkey ./private/server.key < ./certs/server.csr > ./certs/server.crt
 
 WORKDIR /
-RUN curl https://ja.wordpress.org/wordpress-5.7-ja.tar.gz > /tmp/wordpress-ja.tar.gz\
-	&& tar -xzf /tmp/wordpress-ja.tar.gz -C /var/www/ \
-	&& rm -f /tmp/wordpress-ja.tar.gz
+RUN curl https://files.phpmyadmin.net/phpMyAdmin/5.1.0/phpMyAdmin-5.1.0-all-languages.tar.gz > /tmp/phpmyadmin.tar.gz\
+	&& tar -xzf /tmp/phpmyadmin.tar.gz -C /var/www/ \
+	&& mv /var/www/phpMyAdmin-5.1.0-all-languages /var/www/phpmyadmin \
+	&& rm -f /tmp/phpmyadmin.tar.gz
+
 
 COPY srcs/nginx.conf etc/nginx/
-COPY srcs/wp-config.php var/www/wordpress/
 COPY srcs/setup.sh /
+COPY srcs/config.inc.php /var/www/phpmyadmin/
 COPY srcs/telegraf.conf /etc/telegraf/
 
 RUN chmod 755 /etc/telegraf/telegraf.conf
 RUN chmod 755 /setup.sh
-RUN chmod 644 /var/www/wordpress/wp-config.php
-RUN chmod -R 755 /var/www/wordpress
-
-EXPOSE 5050
+RUN chmod 755 /var/www/phpmyadmin
+RUN chmod 755 /var/www/phpmyadmin/config.inc.php
+RUN chmod 755 /var/www/phpmyadmin/index.php
 
 ENTRYPOINT ["/setup.sh"]
+
+EXPOSE 5000

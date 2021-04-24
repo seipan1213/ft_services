@@ -1,10 +1,13 @@
 FROM alpine:3.13
 
-RUN apk update \
-    && apk --no-cache add \
-            openrc \
-            mysql \
-            mysql-client
+RUN apk update
+RUN apk --no-cache add \
+	openrc \
+	mysql \
+	mysql-client \
+	telegraf
+
+RUN mkdir -p /etc/telegraf
 
 RUN sed -i'.bak' 's/^#rc_sys=""/rc_sys="lxc"/' /etc/rc.conf \
     && sed -i 's/^#rc_provide="!net"/rc_provide="loopback net"/' /etc/rc.conf \
@@ -19,7 +22,9 @@ RUN touch /var/log/mysqld.log
 
 COPY ./srcs/setup.sh /
 COPY ./srcs/my.cnf /etc/mysql/
+COPY ./srcs/telegraf.conf /etc/telegraf/
 
+RUN chmod 755 /etc/telegraf/telegraf.conf
 RUN chmod 755 /setup.sh
 RUN chmod 666 /var/log/mysqld.log
 
