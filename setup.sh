@@ -27,10 +27,12 @@ docker build -t sehattor/mysql ./srcs/mysql/
 docker build -t sehattor/wordpress ./srcs/wordpress/
 docker build -t sehattor/phpmyadmin ./srcs/phpmyadmin/
 docker build -t sehattor/influxdb ./srcs/influxdb/
+docker build -t sehattor/grafana ./srcs/grafana/
 
 kubectl apply -f ./srcs/metallb/metallb.yaml 
 kubectl apply -f ./srcs/nginx/nginx.yaml
 kubectl apply -f ./srcs/mysql/mysql.yaml
 kubectl apply -f ./srcs/wordpress/wordpress.yaml
 kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
-kubectl apply -f ./srcs/influxdb/influxdb.yaml 
+kubectl apply -f ./srcs/influxdb/influxdb.yaml
+kubectl apply -f ./srcs/grafana/grafana.yaml 
