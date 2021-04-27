@@ -7,9 +7,8 @@ RUN apk --no-cache add \
 	grafana
 
 RUN mkdir -p /etc/telegraf
-RUN mkdir -p /usr/share/grafana/ssl
 
-WORKDIR /usr/share/grafana/ssl
+WORKDIR /usr/share/grafana/
 
 RUN	openssl genrsa 2048 > ./server.key \
 	&& openssl req -new -key ./server.key > ./server.csr \
