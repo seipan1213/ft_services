@@ -38,6 +38,11 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: var/lib/mysql
+      initContainers:
+      - name: influxdb-service
+        image: sehattor/mysql
+        imagePullPolicy: Never
+        command: ['sh', '-c', 'until nc -z influxdb-service 8086; do echo waiting for influxdb-service 8086; sleep 2; done;']
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:

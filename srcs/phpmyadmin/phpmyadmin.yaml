@@ -36,3 +36,8 @@ spec:
       - name: phpmyadmin
         image: sehattor/phpmyadmin
         imagePullPolicy: Never
+      initContainers:
+      - name: influxdb-service
+        image: sehattor/phpmyadmin
+        imagePullPolicy: Never
+        command: ['sh', '-c', 'until nc -z influxdb-service 8086; do echo waiting for influxdb-service; sleep 2; done;']
