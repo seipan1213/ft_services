@@ -19,12 +19,12 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manife
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manifests/metallb.yaml
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
-docker build -t sehattor/nginx ./srcs/nginx/
-docker build -t sehattor/mysql ./srcs/mysql/
-docker build -t sehattor/wordpress ./srcs/wordpress/
-docker build -t sehattor/phpmyadmin ./srcs/phpmyadmin/
-docker build -t sehattor/ftps ./srcs/ftps/
 docker build -t sehattor/influxdb ./srcs/influxdb/
+docker build -t sehattor/mysql ./srcs/mysql/
+docker build -t sehattor/ftps ./srcs/ftps/
+docker build -t sehattor/nginx ./srcs/nginx/
+docker build -t sehattor/phpmyadmin ./srcs/phpmyadmin/
+docker build -t sehattor/wordpress ./srcs/wordpress/
 docker build -t sehattor/grafana ./srcs/grafana/
 
 kubectl apply -f ./srcs/metallb/metallb.yaml
