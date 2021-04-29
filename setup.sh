@@ -1,7 +1,6 @@
 #!/bin/sh
 
 minikube delete
-
 killall -TERM kubectl minikube VBoxHeadless
 
 minikube start --vm-driver=docker --extra-config=apiserver.service-node-port-range=1-65535
