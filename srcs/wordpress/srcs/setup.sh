@@ -1,12 +1,19 @@
 #!bin/sh
- 
+
 rc-status
 rc-service php-fpm7 start
 telegraf --config /etc/telegraf/telegraf.conf&
 
-wp core install --title=test --admin_user=admin --admin_password=admin \
-		--admin_email=admin@example.com --url=https://192.168.49.50:5050 \
-		--path=/var/www/wordpress
+cd /var/www/wordpress
+
+wp_result=1
+while [ $wp_result -ne 0 ]
+do
+	wp core install --title=test --admin_user=admin --admin_password=admin \
+			--admin_email=admin@example.com --url=https://192.168.49.50:5050
+	wp_result=$?
+	sleep 1
+done
 
 wp user create rika \
 	rika@example.com \
