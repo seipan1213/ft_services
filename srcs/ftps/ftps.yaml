@@ -15,12 +15,6 @@ spec:
   - name: ftps
     port: 21
     protocol: TCP
-  - name: pasv-min
-    port: 60020
-    protocol: TCP
-  - name: pasv-max
-    port: 60021
-    protocol: TCP
 
 ---
 
