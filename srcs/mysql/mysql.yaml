@@ -50,9 +50,9 @@ spec:
         imagePullPolicy: Never
         command: ['sh', '-c', 'until nc -z influxdb-service 8086; do echo waiting for influxdb-service 8086; sleep 2; done;']
       volumes:
-        - name: mysql-persistent-storage
-          persistentVolumeClaim:
-            claimName: mysql-pvc
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc
 ---
 
 apiVersion: v1

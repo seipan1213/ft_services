@@ -45,9 +45,9 @@ spec:
           successThreshold: 1
           failureThreshold: 3
       volumes:
-        - name: influxdb-persistent-storage
-          persistentVolumeClaim:
-            claimName: influxdb-pvc
+      - name: influxdb-persistent-storage
+        persistentVolumeClaim:
+          claimName: influxdb-pvc
 ---
 
 apiVersion: v1
