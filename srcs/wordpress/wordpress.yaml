@@ -36,6 +36,9 @@ spec:
       - name: wordpress
         image: sehattor/wordpress:v1
         imagePullPolicy: Never
+        volumeMounts:
+        - name: wordpress-persistent-storage
+          mountPath: var/www/wordpress
         livenessProbe:
           exec:
             command: ["ash", "./livenessprobe.sh"]
@@ -51,3 +54,38 @@ spec:
         image: sehattor/wordpress:v1
         imagePullPolicy: Never
         command: ['sh', '-c', 'until nc -z mysql-service 3306; do echo waiting for mysql-service; sleep 2; done;']
+      volumes:
+        - name: wordpress-persistent-storage
+          persistentVolumeClaim:
+            claimName: wordpress-pvc
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: wordpress-pv
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: wordpress
+  hostPath:
+    path: /data/wordpress-pv
+    type: DirectoryOrCreate
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wordpress-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: wordpress
