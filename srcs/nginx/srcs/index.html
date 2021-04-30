@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Welcome to nginx!</title>
+<title>sehattor ft_service</title>
 <style>
     body {
         width: 35em;
@@ -11,16 +11,25 @@
 </style>
 </head>
 <body>
-<h1>Welcome to sehattor nginx!</h1>
-<p>If you see this page, the nginx web server is successfully installed and
-working. Further configuration is required.</p>
+<h1>Welcome to sehattor ft_service</h1>
+<a href="https://192.168.49.50">nginx port 80 433</a><br>
+<a href="https://192.168.49.50/wordpress">wordpress redirect</a><br>
+<a href="https://192.168.49.50/phpmyadmin">phpmyadmin reverse proxy</a><br>
+<a href="https://192.168.49.50:5050">wordpress</a><br>
+<a href="https://192.168.49.50:5050/wp-login.php">wordpress login admin pass admin</a><br>
+<a href="https://192.168.49.50:5000">phpmyadmin login root pass toor</a><br>
+<a href="https://192.168.49.50:3000">grafana</a><br>
 
-<p>For online documentation and support please refer to
-<a href="http://nginx.org/">nginx.org</a>.<br/>
-Commercial support is available at
-<a href="http://nginx.com/">nginx.com</a>.</p>
+<pre><code>
+#kubectl
+kubectl get all
+kubectl exec -it "POD NAME" ash
+minikube dashboard
 
-<p><em>Thank you for using nginx.</em></p>
+#ftp client
+apk add lftp
+echo set ssl:verify-certificate no >> /etc/lftp.conf
+lftp root@192.168.49.50:21   pass toor
 </body>
 </html>
 
