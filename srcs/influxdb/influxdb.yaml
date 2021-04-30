@@ -33,11 +33,17 @@ spec:
     spec:
       containers:
       - name: influxdb
-        image: sehattor/influxdb
+        image: sehattor/influxdb:v1
         imagePullPolicy: Never
         volumeMounts:
         - name: influxdb-persistent-storage
           mountPath: var/lib/influxdb
+        livenessProbe:
+          exec:
+            command: ["ash", "./livenessprobe.sh"]
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
       volumes:
         - name: influxdb-persistent-storage
           persistentVolumeClaim:

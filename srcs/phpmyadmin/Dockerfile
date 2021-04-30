@@ -41,12 +41,14 @@ COPY srcs/nginx.conf etc/nginx/
 COPY srcs/setup.sh /
 COPY srcs/config.inc.php /var/www/phpmyadmin/
 COPY srcs/telegraf.conf /etc/telegraf/
+COPY srcs/livenessprobe.sh /
 
 RUN chmod 755 /etc/telegraf/telegraf.conf
 RUN chmod 755 /setup.sh
 RUN chmod 755 /var/www/phpmyadmin
 RUN chmod 755 /var/www/phpmyadmin/config.inc.php
 RUN chmod 755 /var/www/phpmyadmin/index.php
+RUN chmod 755 /livenessprobe.sh
 
 ENTRYPOINT ["/setup.sh"]
 

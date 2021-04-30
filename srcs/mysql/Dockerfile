@@ -20,12 +20,14 @@ RUN sed -i'.bak' 's/^#rc_sys=""/rc_sys="lxc"/' /etc/rc.conf \
 
 RUN touch /var/log/mysqld.log
 
-COPY ./srcs/setup.sh /
-COPY ./srcs/my.cnf /etc/mysql/
-COPY ./srcs/telegraf.conf /etc/telegraf/
+COPY srcs/setup.sh /
+COPY srcs/my.cnf /etc/mysql/
+COPY srcs/telegraf.conf /etc/telegraf/
+COPY srcs/livenessprobe.sh /
 
 RUN chmod 755 /etc/telegraf/telegraf.conf
 RUN chmod 755 /setup.sh
 RUN chmod 666 /var/log/mysqld.log
+RUN chmod 755 /livenessprobe.sh
 
 ENTRYPOINT ["/setup.sh"]

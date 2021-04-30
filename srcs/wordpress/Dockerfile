@@ -42,11 +42,13 @@ COPY srcs/nginx.conf etc/nginx/
 COPY srcs/wp-config.php var/www/wordpress/
 COPY srcs/setup.sh /
 COPY srcs/telegraf.conf /etc/telegraf/
+COPY srcs/livenessprobe.sh /
 
 RUN chmod 755 /etc/telegraf/telegraf.conf
 RUN chmod 755 /setup.sh
-RUN chmod 644 /var/www/wordpress/wp-config.php
+RUN chmod 755 /var/www/wordpress/wp-config.php
 RUN chmod -R 755 /var/www/wordpress
+RUN chmod 755 /livenessprobe.sh
 
 EXPOSE 5050
 

@@ -33,14 +33,20 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: sehattor/mysql
+        image: sehattor/mysql:v1
         imagePullPolicy: Never
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: var/lib/mysql
+        livenessProbe:
+          exec:
+            command: ["ash", "./livenessprobe.sh"]
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
       initContainers:
       - name: influxdb-service
-        image: sehattor/mysql
+        image: sehattor/mysql:v1
         imagePullPolicy: Never
         command: ['sh', '-c', 'until nc -z influxdb-service 8086; do echo waiting for influxdb-service 8086; sleep 2; done;']
       volumes:

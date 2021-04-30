@@ -34,14 +34,20 @@ spec:
     spec:
       containers:
       - name: wordpress
-        image: sehattor/wordpress
+        image: sehattor/wordpress:v1
         imagePullPolicy: Never
+        livenessProbe:
+          exec:
+            command: ["ash", "./livenessprobe.sh"]
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
       initContainers:
       - name: influxdb-service
-        image: sehattor/wordpress
+        image: sehattor/wordpress:v1
         imagePullPolicy: Never
         command: ['sh', '-c', 'until nc -z influxdb-service 8086; do echo waiting for influxdb-service 8086; sleep 2; done;']
       - name: mysql-service
-        image: sehattor/wordpress
+        image: sehattor/wordpress:v1
         imagePullPolicy: Never
         command: ['sh', '-c', 'until nc -z mysql-service 3306; do echo waiting for mysql-service; sleep 2; done;']

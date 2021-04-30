@@ -17,17 +17,19 @@ RUN	openssl genrsa 2048 > ./server.key \
 
 WORKDIR /
 
-COPY ./srcs/setup.sh /
-COPY ./srcs/telegraf.conf /etc/telegraf/
-COPY ./srcs/defaults.ini /usr/share/grafana/conv/
-COPY ./srcs/datasources/datasources.yaml /usr/share/grafana/conf/provisioning/datasources/
-COPY ./srcs/dashboards/* /usr/share/grafana/conf/provisioning/dashboards/
+COPY srcs/setup.sh /
+COPY srcs/telegraf.conf /etc/telegraf/
+COPY srcs/defaults.ini /usr/share/grafana/conv/
+COPY srcs/datasources/datasources.yaml /usr/share/grafana/conf/provisioning/datasources/
+COPY srcs/dashboards/* /usr/share/grafana/conf/provisioning/dashboards/
+COPY srcs/livenessprobe.sh /
 
 RUN chmod 755 /setup.sh
 RUN chmod 755 /etc/telegraf/telegraf.conf
 RUN chmod 755 /usr/share/grafana/conv/defaults.ini
 RUN chmod 755 /usr/share/grafana/conf/provisioning/datasources/datasources.yaml
 RUN chmod 755 /usr/share/grafana/conf/provisioning/dashboards/*
+RUN chmod 755 /livenessprobe.sh
 
 EXPOSE	3000
 

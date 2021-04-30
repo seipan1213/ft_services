@@ -33,10 +33,12 @@ WORKDIR /
 COPY srcs/setup.sh /
 COPY srcs/telegraf.conf /etc/telegraf/
 COPY srcs/vsftpd.conf /etc/vsftpd/
+COPY srcs/livenessprobe.sh /
 
 RUN chmod 755 /etc/telegraf/telegraf.conf
 RUN chmod 755 /setup.sh
 RUN chmod 755 /etc/vsftpd/vsftpd.conf
+RUN chmod 755 /livenessprobe.sh
 
 ENTRYPOINT ["/setup.sh"]
 

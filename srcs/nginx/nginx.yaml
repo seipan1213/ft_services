@@ -40,10 +40,16 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: sehattor/nginx
+        image: sehattor/nginx:v1
         imagePullPolicy: Never
+        livenessProbe:
+          exec:
+            command: ["ash", "./livenessprobe.sh"]
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
       initContainers:
       - name: influxdb-service
-        image: sehattor/nginx
+        image: sehattor/nginx:v1
         imagePullPolicy: Never
         command: ['sh', '-c', 'until nc -z influxdb-service 8086; do echo waiting for influxdb-service 8086; sleep 2; done;']

@@ -36,11 +36,14 @@ COPY srcs/nginx.conf etc/nginx/
 COPY srcs/sshd_config /etc/ssh/
 COPY srcs/setup.sh /
 COPY srcs/telegraf.conf /etc/telegraf/
+COPY srcs/livenessprobe.sh /
+
 
 RUN chmod 755 /etc/ssh/sshd_config
 RUN chmod 755 /etc/telegraf/telegraf.conf
 RUN chmod 755 /setup.sh
 RUN chmod 755 var/lib/nginx/html/index.html
+RUN chmod 755 /livenessprobe.sh
 
 ENTRYPOINT ["/setup.sh"]
 
