@@ -22,14 +22,20 @@
 
 <pre><code>
 #kubectl
+minikube dashboard
 kubectl get all
 kubectl exec -it "POD NAME" ash
-minikube dashboard
 
 #ftp client
 apk add lftp
 echo set ssl:verify-certificate no >> /etc/lftp.conf
-lftp root@192.168.49.50:21   pass toor
+lftp root@192.168.49.50:21
+pass toor
+
+#ssh client
+apk add openssh
+ssh root@192.168.49.50 -p 22
+pass toor
 </body>
 </html>
 
