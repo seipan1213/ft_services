@@ -9,11 +9,14 @@ spec:
   selector:
     app: ftps
   ports:
-  - name: ftps-data
-    port: 20
-    protocol: TCP
   - name: ftps
     port: 21
+    protocol: TCP
+  - name: ftps-pass-1
+    port: 60020
+    protocol: TCP
+  - name: ftps-pass-2
+    port: 60021
     protocol: TCP
 
 ---
@@ -45,6 +48,13 @@ spec:
           periodSeconds: 5
           successThreshold: 1
           failureThreshold: 3
+        ports:
+        - name: ftps
+          containerPort: 21
+        - name: ftps-pass-1
+          containerPort: 60020
+        - name: ftps-pass-2
+          containerPort: 60021
       initContainers:
       - name: influxdb-service
         image: sehattor/ftps:v1

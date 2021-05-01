@@ -42,4 +42,4 @@ RUN chmod 755 /livenessprobe.sh
 
 ENTRYPOINT ["/setup.sh"]
 
-EXPOSE 21
+EXPOSE 21 60020 60021
